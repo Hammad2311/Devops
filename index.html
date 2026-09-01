@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Student Registration</title>
+    <title>Student Information Portal</title>
 
     <style>
         * {
@@ -13,101 +12,158 @@
 
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #eef2f7;
+            color: #222;
+        }
+
+        header {
+            background: #172554;
+            color: white;
+            padding: 22px 8%;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        header p {
+            margin: 6px 0 0;
+            color: #cbd5e1;
+        }
+
+        .main {
+            width: 85%;
+            max-width: 1000px;
+            margin: 35px auto;
         }
 
         .card {
-            width: 600px;
             background: white;
-            padding: 35px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
 
-        h1 {
-            text-align: center;
-            margin-bottom: 5px;
-            color: #333;
+        .card h2 {
+            margin-top: 0;
+            color: #172554;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 12px;
         }
 
-        .description {
-            text-align: center;
-            color: #777;
-            margin-bottom: 30px;
-        }
-
-        .row {
-            display: flex;
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 20px;
         }
 
         .field {
-            flex: 1;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
+        }
+
+        .full {
+            grid-column: 1 / 3;
         }
 
         label {
             display: block;
-            margin-bottom: 7px;
             font-weight: bold;
-            color: #444;
+            margin-bottom: 7px;
         }
 
         input,
-        select {
+        select,
+        textarea {
             width: 100%;
             padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 7px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
             font-size: 15px;
         }
 
-        input:focus,
-        select:focus {
-            outline: none;
-            border-color: #667eea;
+        textarea {
+            height: 100px;
+            resize: vertical;
         }
 
-        button {
+        .radio-group,
+        .checkbox-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .radio-group label,
+        .checkbox-group label {
+            font-weight: normal;
+        }
+
+        .radio-group input,
+        .checkbox-group input {
+            width: auto;
+            margin-right: 5px;
+        }
+
+        .submit-btn {
             width: 100%;
-            padding: 13px;
+            padding: 14px;
             border: none;
             border-radius: 7px;
-            background: #667eea;
+            background: #2563eb;
             color: white;
-            font-size: 16px;
+            font-size: 17px;
             font-weight: bold;
             cursor: pointer;
         }
 
-        button:hover {
-            background: #5568d8;
+        .submit-btn:hover {
+            background: #1d4ed8;
         }
 
-        #result {
+        #studentOutput {
             display: none;
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 7px;
-            background: #e8f5e9;
-            color: #2e7d32;
-            text-align: center;
-            font-weight: bold;
         }
 
-        @media (max-width: 650px) {
-            .card {
-                width: 90%;
+        .output-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 5px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .output-row strong {
+            color: #475569;
+        }
+
+        .success {
+            background: #ecfdf5;
+            border-left: 5px solid #16a34a;
+            padding: 12px;
+            margin-bottom: 20px;
+            color: #166534;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #64748b;
+        }
+
+        @media (max-width: 700px) {
+            .grid {
+                grid-template-columns: 1fr;
             }
 
-            .row {
-                flex-direction: column;
-                gap: 0;
+            .full {
+                grid-column: 1;
+            }
+
+            .main {
+                width: 92%;
             }
         }
     </style>
@@ -115,109 +171,299 @@
 
 <body>
 
+<header>
+    <h1>Student Information Portal</h1>
+    <p>Student Details Management System</p>
+</header>
+
+<div class="main">
+
+    <!-- Student Form -->
     <div class="card">
 
-        <h1>Student Registration</h1>
-
-        <p class="description">
-            Enter your details below
-        </p>
+        <h2>Enter Student Information</h2>
 
         <form id="studentForm">
 
-            <div class="row">
+            <div class="grid">
 
                 <div class="field">
-                    <label>First Name</label>
-                    <input type="text" placeholder="First name" required>
+                    <label for="studentId">Student ID</label>
+                    <input
+                        type="text"
+                        id="studentId"
+                        placeholder="Enter student ID"
+                        required>
                 </div>
 
                 <div class="field">
-                    <label>Last Name</label>
-                    <input type="text" placeholder="Last name" required>
-                </div>
-
-            </div>
-
-            <div class="row">
-
-                <div class="field">
-                    <label>Student ID</label>
-                    <input type="text" placeholder="e.g. 2026001" required>
+                    <label for="studentName">Full Name</label>
+                    <input
+                        type="text"
+                        id="studentName"
+                        placeholder="Enter full name"
+                        required>
                 </div>
 
                 <div class="field">
-                    <label>Date of Birth</label>
-                    <input type="date" required>
+                    <label for="email">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="student@example.com"
+                        required>
                 </div>
 
-            </div>
-
-            <div class="field">
-                <label>Email Address</label>
-                <input type="email" placeholder="student@example.com" required>
-            </div>
-
-            <div class="field">
-                <label>Phone Number</label>
-                <input type="tel" placeholder="Enter phone number" required>
-            </div>
-
-            <div class="row">
+                <div class="field">
+                    <label for="phone">Phone Number</label>
+                    <input
+                        type="tel"
+                        id="phone"
+                        placeholder="Enter phone number"
+                        required>
+                </div>
 
                 <div class="field">
-                    <label>Department</label>
-                    <select required>
+                    <label for="dob">Date of Birth</label>
+                    <input
+                        type="date"
+                        id="dob"
+                        required>
+                </div>
+
+                <div class="field">
+                    <label for="department">Department</label>
+
+                    <select id="department" required>
                         <option value="">Select Department</option>
-                        <option>Computer Science</option>
+                        <option>Computer Science and Engineering</option>
                         <option>Information Science</option>
-                        <option>Electronics</option>
-                        <option>Electrical</option>
-                        <option>Mechanical</option>
-                        <option>Civil</option>
+                        <option>Electronics and Communication</option>
+                        <option>Electrical and Electronics</option>
+                        <option>Mechanical Engineering</option>
+                        <option>Civil Engineering</option>
                     </select>
                 </div>
 
                 <div class="field">
-                    <label>Year</label>
-                    <select required>
-                        <option value="">Select Year</option>
-                        <option>1st Year</option>
-                        <option>2nd Year</option>
-                        <option>3rd Year</option>
-                        <option>4th Year</option>
+                    <label for="semester">Semester</label>
+
+                    <select id="semester" required>
+                        <option value="">Select Semester</option>
+                        <option>1st Semester</option>
+                        <option>2nd Semester</option>
+                        <option>3rd Semester</option>
+                        <option>4th Semester</option>
+                        <option>5th Semester</option>
+                        <option>6th Semester</option>
+                        <option>7th Semester</option>
+                        <option>8th Semester</option>
                     </select>
+                </div>
+
+                <div class="field">
+
+                    <label>Gender</label>
+
+                    <div class="radio-group">
+
+                        <label>
+                            <input type="radio" name="gender" value="Male" required>
+                            Male
+                        </label>
+
+                        <label>
+                            <input type="radio" name="gender" value="Female">
+                            Female
+                        </label>
+
+                        <label>
+                            <input type="radio" name="gender" value="Other">
+                            Other
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <div class="field full">
+
+                    <label>Skills</label>
+
+                    <div class="checkbox-group">
+
+                        <label>
+                            <input type="checkbox" name="skills" value="Programming">
+                            Programming
+                        </label>
+
+                        <label>
+                            <input type="checkbox" name="skills" value="Web Development">
+                            Web Development
+                        </label>
+
+                        <label>
+                            <input type="checkbox" name="skills" value="Database">
+                            Database
+                        </label>
+
+                        <label>
+                            <input type="checkbox" name="skills" value="Cloud Computing">
+                            Cloud Computing
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <div class="field full">
+
+                    <label for="address">Address</label>
+
+                    <textarea
+                        id="address"
+                        placeholder="Enter your address"
+                        required></textarea>
+
                 </div>
 
             </div>
 
-            <div class="field">
-                <label>Address</label>
-                <input type="text" placeholder="Enter your address" required>
-            </div>
-
-            <button type="submit">
-                Register Student
+            <button class="submit-btn" type="submit">
+                Save Student Details
             </button>
 
         </form>
 
-        <div id="result">
-            Student registered successfully!
+    </div>
+
+
+    <!-- Output -->
+    <div class="card" id="studentOutput">
+
+        <div class="success">
+            ✓ Student details submitted successfully!
+        </div>
+
+        <h2>Student Information</h2>
+
+        <div class="output-row">
+            <strong>Student ID</strong>
+            <span id="outId"></span>
+        </div>
+
+        <div class="output-row">
+            <strong>Name</strong>
+            <span id="outName"></span>
+        </div>
+
+        <div class="output-row">
+            <strong>Email</strong>
+            <span id="outEmail"></span>
+        </div>
+
+        <div class="output-row">
+            <strong>Phone</strong>
+            <span id="outPhone"></span>
+        </div>
+
+        <div class="output-row">
+            <strong>Date of Birth</strong>
+            <span id="outDob"></span>
+        </div>
+
+        <div class="output-row">
+            <strong>Department</strong>
+            <span id="outDepartment"></span>
+        </div>
+
+        <div class="output-row">
+            <strong>Semester</strong>
+            <span id="outSemester"></span>
+        </div>
+
+        <div class="output-row">
+            <strong>Gender</strong>
+            <span id="outGender"></span>
+        </div>
+
+        <div class="output-row">
+            <strong>Skills</strong>
+            <span id="outSkills"></span>
+        </div>
+
+        <div class="output-row">
+            <strong>Address</strong>
+            <span id="outAddress"></span>
         </div>
 
     </div>
 
-    <script>
-        document.getElementById("studentForm").addEventListener("submit", function(event) {
+</div>
 
-            event.preventDefault();
+<footer>
+    Student Information Portal © 2026
+</footer>
 
-            document.getElementById("result").style.display = "block";
 
-            this.reset();
-        });
-    </script>
+<script>
+
+    document.getElementById("studentForm").addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        // Get form values
+        const id = document.getElementById("studentId").value;
+        const name = document.getElementById("studentName").value;
+        const email = document.getElementById("email").value;
+        const phone = document.getElementById("phone").value;
+        const dob = document.getElementById("dob").value;
+        const department = document.getElementById("department").value;
+        const semester = document.getElementById("semester").value;
+        const address = document.getElementById("address").value;
+
+        // Get selected gender
+        const genderElement =
+            document.querySelector('input[name="gender"]:checked');
+
+        const gender = genderElement
+            ? genderElement.value
+            : "Not specified";
+
+        // Get selected skills
+        const selectedSkills = [];
+
+        document.querySelectorAll('input[name="skills"]:checked')
+            .forEach(function(skill) {
+                selectedSkills.push(skill.value);
+            });
+
+        const skills = selectedSkills.length > 0
+            ? selectedSkills.join(", ")
+            : "None";
+
+        // Display information
+        document.getElementById("outId").textContent = id;
+        document.getElementById("outName").textContent = name;
+        document.getElementById("outEmail").textContent = email;
+        document.getElementById("outPhone").textContent = phone;
+        document.getElementById("outDob").textContent = dob;
+        document.getElementById("outDepartment").textContent = department;
+        document.getElementById("outSemester").textContent = semester;
+        document.getElementById("outGender").textContent = gender;
+        document.getElementById("outSkills").textContent = skills;
+        document.getElementById("outAddress").textContent = address;
+
+        // Show result
+        document.getElementById("studentOutput").style.display = "block";
+
+        // Scroll to result
+        document.getElementById("studentOutput")
+            .scrollIntoView({ behavior: "smooth" });
+
+    });
+
+</script>
 
 </body>
 </html>
